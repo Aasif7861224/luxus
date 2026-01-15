@@ -2,7 +2,6 @@
 
 require_once "../backend/config/database.php";
 require_once "includes/header.php";
-require_once "includes/sidebar.php";
 
 // Simple auth check
 if (!isset($_SESSION['admin_id'])) {
@@ -30,20 +29,6 @@ $totalUsers     = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tot
         body {
             background-color: #f5f6fa;
         }
-        .sidebar {
-            min-height: 100vh;
-            background: #111;
-        }
-        .sidebar a {
-            color: #ddd;
-            text-decoration: none;
-            padding: 12px 20px;
-            display: block;
-        }
-        .sidebar a:hover {
-            background: #222;
-            color: #fff;
-        }
         .stat-card {
             border-left: 5px solid #000;
         }
@@ -58,8 +43,6 @@ $totalUsers     = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tot
 <div class="container-fluid">
     <div class="row">
 
-        <!-- SIDEBAR -->
-        <?php require_once "includes/sidebar.php"; ?>
 
         <!-- MAIN CONTENT -->
         <div class="col-lg-10 col-md-9 p-4">
@@ -105,16 +88,7 @@ $totalUsers     = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tot
                 </div>
             </div>
 
-            <!-- RECENT ACTIVITY PLACEHOLDER -->
-            <div class="card mt-4 shadow-sm">
-                <div class="card-body">
-                    <h6 class="mb-3">Recent Activity</h6>
-                    <p class="text-muted mb-0">
-                        Dashboard ready hai ✅  
-                        Next step: Orders, Products & Services management.
-                    </p>
-                </div>
-            </div>
+            
             <?php require_once "includes/footer.php"; ?>
         </div>
     </div>
