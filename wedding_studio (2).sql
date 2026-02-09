@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2026 at 07:25 AM
+-- Generation Time: Feb 09, 2026 at 08:21 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -203,7 +203,37 @@ INSERT INTO `products` (`id`, `category_id`, `title`, `description`, `image`, `s
 (1, 1, 'TMC Soft Preset', 'Soft cinematic wedding preset', 'preset1.jpg', 'active', '2026-01-14 08:47:44'),
 (2, 1, 'TMC Premium Preset', 'Premium tone preset', 'preset2.jpg', 'active', '2026-01-14 08:47:44'),
 (3, 2, 'Wedding Gold LUT', 'Gold cinematic LUT', 'lut1.jpg', 'active', '2026-01-14 08:47:44'),
-(4, 2, 'dfvh', NULL, NULL, 'active', '2026-01-14 10:09:38');
+(4, 2, 'dfvh', NULL, NULL, 'active', '2026-01-14 10:09:38'),
+(5, 2, 'fdhsg', 'sdgthdsdsg', 'prod_1768467050_4927.jpg', 'active', '2026-01-15 08:50:50'),
+(6, 4, 'bmw', 'dhyefdwuhdwuj', NULL, 'active', '2026-01-15 09:10:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_media`
+--
+
+CREATE TABLE `product_media` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `media_type` enum('image','video') NOT NULL,
+  `file_name` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_media`
+--
+
+INSERT INTO `product_media` (`id`, `product_id`, `media_type`, `file_name`, `created_at`) VALUES
+(1, 6, 'image', 'img_1768468204_1248.jpeg', '2026-01-15 09:10:04'),
+(2, 6, 'image', 'img_1768468204_9551.jpg', '2026-01-15 09:10:04'),
+(3, 6, 'image', 'img_1768468204_7980.jpg', '2026-01-15 09:10:04'),
+(4, 6, 'image', 'img_1768468204_5477.jpg', '2026-01-15 09:10:04'),
+(5, 6, 'image', 'img_1768468204_4724.jpg', '2026-01-15 09:10:04'),
+(6, 6, 'video', 'vid_1768468204_1334.mp4', '2026-01-15 09:10:04'),
+(7, 6, 'video', 'vid_1768468204_1684.mp4', '2026-01-15 09:10:04'),
+(8, 6, 'image', 'img_1768468830_8664.jpeg', '2026-01-15 09:20:30');
 
 -- --------------------------------------------------------
 
@@ -228,7 +258,10 @@ INSERT INTO `product_prices` (`id`, `product_id`, `price`, `discount_price`, `va
 (1, 1, 2999.00, 1999.00, '2026-01-14', NULL),
 (2, 2, 3999.00, 2499.00, '2026-01-14', NULL),
 (3, 3, 1999.00, 1499.00, '2026-01-14', NULL),
-(4, 4, 35465476.00, 34567.00, '2026-01-14', NULL);
+(4, 4, 35465476.00, 34567.00, '2026-01-14', NULL),
+(5, 5, 56432547.00, 5247.00, '2026-01-15', NULL),
+(6, 6, 436576.00, 467.00, '2026-01-15', NULL),
+(7, 6, 436576.00, 467.00, '2026-01-15', NULL);
 
 -- --------------------------------------------------------
 
@@ -410,6 +443,13 @@ ALTER TABLE `products`
   ADD KEY `category_id` (`category_id`);
 
 --
+-- Indexes for table `product_media`
+--
+ALTER TABLE `product_media`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indexes for table `product_prices`
 --
 ALTER TABLE `product_prices`
@@ -499,13 +539,19 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `product_media`
+--
+ALTER TABLE `product_media`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `product_prices`
 --
 ALTER TABLE `product_prices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -576,6 +622,12 @@ ALTER TABLE `order_items`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
+
+--
+-- Constraints for table `product_media`
+--
+ALTER TABLE `product_media`
+  ADD CONSTRAINT `fk_product_media_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `product_prices`
