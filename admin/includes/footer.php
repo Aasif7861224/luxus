@@ -1,10 +1,10 @@
 <?php
-// Luxus/admin/includes/footer.php
+// luxlut/admin/includes/footer.php
 ?>
 </div> <!-- /container-fluid -->
 
 <footer class="text-center py-3 text-muted small">
-    © <?= date('Y'); ?> Luxus Wedding Studio
+    © <?= date('Y'); ?> luxlut Wedding Studio
 </footer>
 
 <!-- Bootstrap JS (Navbar toggler etc.) -->

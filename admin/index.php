@@ -8,7 +8,7 @@ if (isset($_SESSION['admin_id'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin Login | Luxus</title>
+    <title>Admin Login | luxlut</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -49,7 +49,7 @@ if (isset($_SESSION['admin_id'])) {
                 </div>
             </div>
             <p class="text-center mt-3 text-muted small">
-                Luxus Admin Panel
+                luxlut Admin Panel
             </p>
         </div>
     </div>

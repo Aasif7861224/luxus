@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_execute($stmt2);
 
         // 3) Upload folders
-        $root = dirname(__DIR__, 2); // points to /LUXUS/
+        $root = dirname(__DIR__, 2); // points to /luxlut/
         $imgDir = $root . "/assets/uploads/products/images/";
         $vidDir = $root . "/assets/uploads/products/videos/";
         ensureDir($imgDir);

@@ -1,27 +1,27 @@
 <?php
-// Luxus/admin/includes/header.php
+// luxlut/admin/includes/header.php
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: /luxus/admin/index.php");
+    header("Location: /luxlut/admin/index.php");
     exit;
 }
 
 /**
  * ✅ IMPORTANT:
  * Set this to your project folder name in htdocs.
- * If your folder name is "Luxus" (capital), still usually URL is /Luxus/ or /luxus/
- * In your case it's: /luxus/
+ * If your folder name is "luxlut" (capital), still usually URL is /luxlut/ or /luxlut/
+ * In your case it's: /luxlut/
  */
-$BASE = "/LUXUS/admin";
+$BASE = "/luxlut/admin";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Luxus Admin Panel</title>
+    <title>luxlut Admin Panel</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -39,7 +39,7 @@ $BASE = "/LUXUS/admin";
 <!-- RESPONSIVE NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark topbar">
     <div class="container-fluid">
-        <a class="navbar-brand fw-semibold" href="<?php echo $BASE; ?>/dashboard.php">Luxus Admin</a>
+        <a class="navbar-brand fw-semibold" href="<?php echo $BASE; ?>/dashboard.php">luxlut Admin</a>
 
         <!-- Mobile Toggler -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar"

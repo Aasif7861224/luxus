@@ -18,7 +18,7 @@ $totalUsers     = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as tot
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Dashboard | Luxus Admin</title>
+    <title>Dashboard | luxlut Admin</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 

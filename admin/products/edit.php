@@ -34,15 +34,15 @@ $id = (int)($_GET['id'] ?? 0);
 if ($id <= 0) { header("Location: list.php"); exit; }
 
 // Paths
-$ROOT = dirname(__DIR__, 2); // /LUXUS
+$ROOT = dirname(__DIR__, 2); // /luxlut
 $IMG_DIR = $ROOT . "/assets/uploads/products/images/";
 $VID_DIR = $ROOT . "/assets/uploads/products/videos/";
 ensureDir($IMG_DIR);
 ensureDir($VID_DIR);
 
 // Browser paths (for preview in HTML)
-$IMG_BASE = "/LUXUS/assets/uploads/products/images/";
-$VID_BASE = "/LUXUS/assets/uploads/products/videos/";
+$IMG_BASE = "/luxlut/assets/uploads/products/images/";
+$VID_BASE = "/luxlut/assets/uploads/products/videos/";
 
 // ---------------------------
 // Handle delete media

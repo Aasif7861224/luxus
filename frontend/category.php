@@ -4,9 +4,9 @@ require_once __DIR__ . '/includes/header.php';
 /**
  * CATEGORY PAGE
  * URL examples:
- *  - /LUXUS/frontend/category.php?type=presets
- *  - /LUXUS/frontend/category.php?type=luts
- *  - /LUXUS/frontend/category.php?type=presets&sort=low&min=199&max=999&q=soft
+ *  - /luxlut/frontend/category.php?type=presets
+ *  - /luxlut/frontend/category.php?type=luts
+ *  - /luxlut/frontend/category.php?type=presets&sort=low&min=199&max=999&q=soft
  */
 
 // ---- Inputs

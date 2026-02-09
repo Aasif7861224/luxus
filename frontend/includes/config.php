@@ -1,13 +1,10 @@
 <?php
-// frontend/includes/config.php
-
-define('BASE_URL', '/LUXUS/');  // folder same hona chahiye
+define('BASE_URL', '/luxlut/');
 
 require_once __DIR__ . '/../../backend/config/database.php';
 
-// ===== GOOGLE OAUTH =====
-define('GOOGLE_CLIENT_ID', 'PASTE_CLIENT_ID_HERE');
-define('GOOGLE_CLIENT_SECRET', 'PASTE_CLIENT_SECRET_HERE');
-
-// Must match Google console redirect URI exactly:
-define('GOOGLE_REDIRECT_URI', 'http://localhost/LUXUS/frontend/auth/callback.php');
+/* Google OAuth */
+define('GOOGLE_CLIENT_ID', 'YOUR_CLIENT_ID.apps.googleusercontent.com');
+define('GOOGLE_CLIENT_SECRET', 'YOUR_NEW_CLIENT_SECRET');
+define('GOOGLE_REDIRECT_URI', 'http://localhost/luxlut/frontend/auth/callback.php');
+?>
