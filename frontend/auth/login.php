@@ -1,16 +1,18 @@
 <?php
 require_once __DIR__ . '/../includes/config.php';
+ensure_session_started();
 
-if (session_status() === PHP_SESSION_NONE) session_start();
-
-$redirect = $_GET['redirect'] ?? (BASE_URL . "frontend/cart.php");
+$defaultRedirect = BASE_URL . 'frontend/cart.php';
+$redirect = safe_redirect_target($_GET['redirect'] ?? '', $defaultRedirect);
 $_SESSION['login_redirect'] = $redirect;
 
-// CSRF protection
+if (GOOGLE_CLIENT_ID === '' || GOOGLE_CLIENT_SECRET === '') {
+    redirect_to(BASE_URL . 'frontend/auth/index.php?error=' . urlencode('Google login is not configured') . '&redirect=' . urlencode($redirect));
+}
+
 $state = bin2hex(random_bytes(16));
 $_SESSION['oauth_state'] = $state;
 
-// Google OAuth authorization URL
 $params = [
     'client_id' => GOOGLE_CLIENT_ID,
     'redirect_uri' => GOOGLE_REDIRECT_URI,
@@ -22,6 +24,4 @@ $params = [
 ];
 
 $authUrl = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_query($params);
-
-header("Location: " . $authUrl);
-exit;
+redirect_to($authUrl);
