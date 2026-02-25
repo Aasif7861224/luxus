@@ -176,8 +176,6 @@ Login credentials:
 
 ---
 
-## 7. ERD (Entity Relationship Diagram)
-
 ```mermaid
 erDiagram
     roles ||--o{ admins : has
@@ -192,29 +190,29 @@ erDiagram
 
     roles {
       int id PK
-      varchar name UK
+      varchar name
     }
     admins {
       int id PK
       int role_id FK
       varchar name
-      varchar email UK
+      varchar email
       varchar password
-      enum status
-      timestamp created_at
+      varchar status
+      datetime created_at
     }
     users {
       int id PK
       varchar google_id
       varchar name
-      varchar email UK
+      varchar email
       varchar password
       varchar phone
-      timestamp created_at
+      datetime created_at
     }
     categories {
       int id PK
-      varchar name UK
+      varchar name
     }
     products {
       int id PK
@@ -223,8 +221,8 @@ erDiagram
       text description
       varchar before_image
       varchar after_image
-      enum status
-      timestamp created_at
+      varchar status
+      datetime created_at
     }
     product_prices {
       int id PK
@@ -237,36 +235,36 @@ erDiagram
     product_media {
       int id PK
       int product_id FK
-      enum media_type
+      varchar media_type
       varchar file_name
-      timestamp created_at
+      datetime created_at
     }
     digital_products {
       int id PK
-      int product_id FK_UK
+      int product_id FK
       varchar drive_link
-      tinyint is_active
-      timestamp created_at
-      timestamp updated_at
+      int is_active
+      datetime created_at
+      datetime updated_at
     }
     orders {
       int id PK
       int user_id FK
       varchar customer_phone
-      enum order_type
+      varchar order_type
       decimal total_amount
-      enum payment_status
+      varchar payment_status
       varchar razorpay_order_id
       varchar razorpay_payment_id
-      enum order_status
-      timestamp created_at
+      varchar order_status
+      datetime created_at
       datetime paid_at
     }
     order_items {
       int id PK
       int order_id FK
       int item_id
-      enum item_type
+      varchar item_type
       decimal price
       decimal discount_price
       decimal final_price
@@ -275,7 +273,7 @@ erDiagram
       int id PK
       int order_id FK
       varchar channel
-      enum status
+      varchar status
       text response_payload
       datetime sent_at
     }
@@ -286,11 +284,11 @@ erDiagram
       varchar email
       varchar phone
       text message
-      enum status
-      timestamp created_at
+      varchar status
+      datetime created_at
     }
-```
 
+```
 ---
 
 ## 8. DFD (Data Flow Diagram)
