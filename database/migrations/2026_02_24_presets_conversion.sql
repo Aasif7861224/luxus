@@ -85,22 +85,58 @@ CREATE TABLE IF NOT EXISTS delivery_logs (
   CONSTRAINT fk_delivery_logs_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 8) Category cleanup (Preset/LUT only)
+-- 8) Feedback collection
+CREATE TABLE IF NOT EXISTS feedback (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  user_id INT(11) DEFAULT NULL,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(120) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  message TEXT NOT NULL,
+  status ENUM('new','reviewed') NOT NULL DEFAULT 'new',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY idx_feedback_user (user_id),
+  KEY idx_feedback_status (status),
+  KEY idx_feedback_created (created_at),
+  KEY idx_feedback_email (email),
+  CONSTRAINT fk_feedback_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 9) Category cleanup (Preset/LUT only)
+INSERT IGNORE INTO categories (id, name) VALUES (1, 'Preset');
+INSERT IGNORE INTO categories (id, name) VALUES (2, 'LUT');
+
+-- Re-map service category products to Preset before removing service category
+UPDATE products p
+INNER JOIN categories c ON c.id = p.category_id
+SET p.category_id = 1
+WHERE LOWER(c.name) = 'service';
+
+-- Re-map duplicate category references to the lowest id of the same name
+UPDATE products p
+INNER JOIN categories c ON c.id = p.category_id
+INNER JOIN (
+  SELECT LOWER(name) AS category_key, MIN(id) AS keep_id
+  FROM categories
+  GROUP BY LOWER(name)
+) x ON x.category_key = LOWER(c.name)
+SET p.category_id = x.keep_id
+WHERE p.category_id <> x.keep_id;
+
 DELETE FROM categories WHERE LOWER(name) = 'service';
 DELETE c1
 FROM categories c1
 INNER JOIN categories c2
   ON c1.name = c2.name
  AND c1.id > c2.id;
-INSERT IGNORE INTO categories (id, name) VALUES (1, 'Preset');
-INSERT IGNORE INTO categories (id, name) VALUES (2, 'LUT');
 
--- 9) Drop wedding-specific tables
+-- 10) Drop wedding-specific tables
 DROP TABLE IF EXISTS wedding_bookings;
 DROP TABLE IF EXISTS services;
 DROP TABLE IF EXISTS service_prices;
 
--- 10) Drop unused legacy tables
+-- 11) Drop unused legacy tables
 DROP TABLE IF EXISTS files;
 DROP TABLE IF EXISTS notifications;
 DROP TABLE IF EXISTS activity_logs;

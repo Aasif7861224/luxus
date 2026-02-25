@@ -147,4 +147,21 @@ CREATE TABLE IF NOT EXISTS delivery_logs (
   CONSTRAINT fk_delivery_logs_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE IF NOT EXISTS feedback (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  user_id INT(11) DEFAULT NULL,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(120) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  message TEXT NOT NULL,
+  status ENUM('new','reviewed') NOT NULL DEFAULT 'new',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY idx_feedback_user (user_id),
+  KEY idx_feedback_status (status),
+  KEY idx_feedback_created (created_at),
+  KEY idx_feedback_email (email),
+  CONSTRAINT fk_feedback_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 COMMIT;

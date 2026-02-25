@@ -40,6 +40,7 @@ $BASE = rtrim(APP_BASE_URL, '/') . '/admin';
                 <li class="nav-item"><a class="nav-link" href="<?= $BASE ?>/products/list.php">Products</a></li>
                 <li class="nav-item"><a class="nav-link" href="<?= $BASE ?>/orders/list.php">Orders</a></li>
                 <li class="nav-item"><a class="nav-link" href="<?= $BASE ?>/users/list.php">Users</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= $BASE ?>/feedback/list.php">Feedback</a></li>
             </ul>
 
             <div class="d-flex align-items-center gap-2">

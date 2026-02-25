@@ -67,8 +67,7 @@ if (!empty($product['category_id'])) {
 }
 
 $IMG_BASE = BASE_URL . 'assets/uploads/products/images/';
-$beforeImage = $product['before_image'] ?? '';
-$afterImage = $product['after_image'] ?? '';
+$mainGalleryImage = !empty($gallery) ? (string)$gallery[0]['file_name'] : '';
 $isLoggedIn = !empty($_SESSION['user_id']);
 $loginReturn = BASE_URL . 'frontend/product.php?id=' . $id . '&add_after_login=1';
 ?>
@@ -79,13 +78,20 @@ $loginReturn = BASE_URL . 'frontend/product.php?id=' . $id . '&add_after_login=1
   .lux-box{ background:#fff; border:1px solid #e6dfd6; border-radius:14px; }
   .lux-pill{ border:1px solid #111; border-radius:999px; padding:6px 10px; font-size:12px; }
 
-  .ba-wrap{ position:relative; width:100%; aspect-ratio:4/3; overflow:hidden; border-radius:16px; background:#ece5dc; }
-  .ba-wrap img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; }
-  .ba-after-wrap{ position:absolute; inset:0 auto 0 0; width:50%; overflow:hidden; border-right:2px solid rgba(255,255,255,.9); }
-  .ba-slider{ position:absolute; left:16px; right:16px; bottom:12px; z-index:5; width:calc(100% - 32px); }
-  .ba-label{ position:absolute; top:12px; font-size:11px; letter-spacing:.4px; background:#111; color:#fff; padding:2px 8px; border-radius:999px; z-index:5; }
-  .ba-label.before{ left:12px; }
-  .ba-label.after{ right:12px; }
+  .product-preview{
+    width:100%;
+    aspect-ratio:4/3;
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid #e6dfd6;
+    background:#ece5dc;
+  }
+  .product-preview img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
 
   .gallery-thumb{ width:88px; height:88px; object-fit:cover; border-radius:10px; border:1px solid #e6dfd6; cursor:pointer; }
   .gallery-thumb.active{ outline:2px solid #111; }
@@ -103,16 +109,12 @@ $loginReturn = BASE_URL . 'frontend/product.php?id=' . $id . '&add_after_login=1
 
 <div class="row g-4">
   <div class="col-lg-7">
-    <?php if ($beforeImage !== '' && $afterImage !== ''): ?>
-      <div class="ba-wrap mb-3" data-compare>
-        <span class="ba-label before">Before</span>
-        <span class="ba-label after">After</span>
-        <img id="beforePreview" src="<?= $IMG_BASE . h($beforeImage) ?>" alt="Before">
-        <div class="ba-after-wrap" id="afterWrap"><img id="afterPreview" src="<?= $IMG_BASE . h($afterImage) ?>" alt="After"></div>
-        <input type="range" class="ba-slider" id="compareSlider" min="0" max="100" value="50">
+    <?php if ($mainGalleryImage !== ''): ?>
+      <div class="product-preview mb-3">
+        <img id="galleryMain" src="<?= $IMG_BASE . h($mainGalleryImage) ?>" alt="<?= h($product['title']) ?>">
       </div>
     <?php else: ?>
-      <div class="lux-box p-5 text-center lux-soft mb-3">Before/After images not uploaded yet.</div>
+      <div class="lux-box p-5 text-center lux-soft mb-3">Gallery images not uploaded yet.</div>
     <?php endif; ?>
 
     <?php if (!empty($gallery)): ?>
@@ -120,7 +122,7 @@ $loginReturn = BASE_URL . 'frontend/product.php?id=' . $id . '&add_after_login=1
         <div class="fw-semibold mb-2">Gallery</div>
         <div class="d-flex flex-wrap gap-2">
           <?php foreach ($gallery as $idx => $img): ?>
-            <img src="<?= $IMG_BASE . h($img['file_name']) ?>" class="gallery-thumb <?= $idx === 0 ? 'active' : '' ?>" data-gallery-thumb>
+            <img src="<?= $IMG_BASE . h($img['file_name']) ?>" class="gallery-thumb <?= $idx === 0 ? 'active' : '' ?>" data-gallery-thumb data-full-src="<?= $IMG_BASE . h($img['file_name']) ?>" alt="Gallery image <?= (int)$idx + 1 ?>">
           <?php endforeach; ?>
         </div>
       </div>
@@ -216,25 +218,14 @@ $related = mysqli_query($conn, "
 
 <script>
 (function(){
-  var slider = document.getElementById('compareSlider');
-  var afterWrap = document.getElementById('afterWrap');
-  if (slider && afterWrap) {
-    var apply = function(){ afterWrap.style.width = slider.value + '%'; };
-    slider.addEventListener('input', apply);
-    apply();
-  }
-
   var thumbs = document.querySelectorAll('[data-gallery-thumb]');
-  var beforePreview = document.getElementById('beforePreview');
-  var afterPreview = document.getElementById('afterPreview');
-  if (thumbs.length && beforePreview && afterPreview) {
+  var mainPreview = document.getElementById('galleryMain');
+  if (thumbs.length && mainPreview) {
     thumbs.forEach(function(t){
       t.addEventListener('click', function(){
         thumbs.forEach(function(x){ x.classList.remove('active'); });
         t.classList.add('active');
-
-        // For gallery click, show selected image as AFTER frame while keeping before fixed.
-        afterPreview.src = t.src;
+        mainPreview.src = t.dataset.fullSrc || t.src;
       });
     });
   }
