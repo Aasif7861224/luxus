@@ -176,6 +176,8 @@ Login credentials:
 
 ---
 
+## 7. ERD (Entity Relationship Diagram)
+
 ```mermaid
 erDiagram
     roles ||--o{ admins : has
